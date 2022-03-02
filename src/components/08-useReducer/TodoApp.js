@@ -3,6 +3,7 @@ import { todoReducer } from './todoRedurcer'
 
 import './styles.css'
 import { useForm } from '../../hooks/useForm'
+import { TodoList } from './TodoList'
 
 
 
@@ -62,7 +63,14 @@ localStorage.setItem('todos', JSON.stringify( todos ))
         payload:todoId
     }
     dispatch(action);
-   
+ }
+
+ const handleToggle =(todoId) => {
+
+    dispatch({ 
+    type: 'toggle', 
+    payload:todoId})
+
  }
 
 return (
@@ -76,25 +84,12 @@ return (
         <div className='row'>
             <div className='col-8'>
 
-                    <ul className='list-group list-group-flush'
-                    >
-                {  todos.map( ( todo, i ) => (
-                    <li
-                    key={ todo.id }
-                    className="list-group-item"
-                    > 
-                        <p className='text-center'>  { i + 1}.{ todo.desc } </p>
-                        <button 
-                        onClick= { () => handleDelete(todo.id) }
-                        className='btn btn-danger'
-                        
-                        >Borrar</button>
-                    </li>
-                ))
-                
-                }
+              <TodoList
+              todos= {todos}
+              handleDelete={handleDelete}
+              handleToggle={handleToggle}
+              />
 
-                </ul>
             </div>
             <div className='col-4 '>
 
