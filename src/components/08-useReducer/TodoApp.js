@@ -2,8 +2,8 @@ import React, { useReducer,useEffect } from 'react'
 import { todoReducer } from './todoRedurcer'
 
 import './styles.css'
-import { useForm } from '../../hooks/useForm'
 import { TodoList } from './TodoList'
+import { TodoAdd } from './TodoAdd'
 
 
 
@@ -26,35 +26,13 @@ export const TodoApp = () => {
 
 const [ todos, dispatch ] = useReducer ( todoReducer, [], init)
 
-const [{ description }, handleInputChange, reset]=useForm({
-    description: ''
-});
 
 useEffect ( () => {
 localStorage.setItem('todos', JSON.stringify( todos ))
 }, [todos])
 
 
- const handleSubmit = (e) => {
-    e.preventDefault()
 
-    if(description.trim().length<=1){
-        return;
-    }
-
-    const newTodo = {
-        id:new Date().getTime(),
-        desc: description,
-        done: false
-    };
-
-    const action = {
-        type: 'add',
-        payload:newTodo
-    }
-    dispatch(action);
-    reset();
- }
 
  const handleDelete = ( todoId ) => {
    
@@ -72,6 +50,16 @@ localStorage.setItem('todos', JSON.stringify( todos ))
     payload:todoId})
 
  }
+
+ const handleAddTodo = ( newTodo ) => {
+     dispatch({
+         type: 'add',
+         payload:newTodo
+     })
+
+ }
+
+
 
 return (
 
@@ -93,28 +81,9 @@ return (
             </div>
             <div className='col-4 '>
 
-                <h4>Add TODO</h4>
-                <hr/>
-
-                
-                <form
-                className='row justify-content-center mt-2'     
-                onSubmit={ handleSubmit } >
-                   <input 
-                   
-                   type="text"
-                   name="description"
-                   autoComplete='off'
-                   onChange={ handleInputChange }  
-                   value={ description }                                   
-                   />
-                   <button 
-                   type="submit"
-                   className='btn btn-outline-primary mt-1 btn-block col-5 align-self-center mt-3'>
-                       Add
-                   </button>
-
-                </form>
+                <TodoAdd
+                    handleAddTodo={ handleAddTodo }
+                />
                 
 
             </div>
