@@ -1,5 +1,6 @@
 body {
     padding: 50px;
+    font-family: 'Lora', serif;
 }
 
 p{
@@ -18,3 +19,7 @@ p{
     text-decoration: line-through;
 }
 
+h1 {
+    
+
+}
